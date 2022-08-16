@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-ingress-udp-app5
+  namespace: app5
+spec:
+  type: NodePort 
+  ports:
+  - port: 8092
+    targetPort: 8092
+    nodePort: 30456
+    protocol: UDP
+    name: nginx-org-udp-snippet
+  selector:
+    app: app5-nginx-ingress

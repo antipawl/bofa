@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bank-ingress
+  namespace: app1
+spec:
+  ingressClassName: nginx-ingress-app1
+  tls:
+  - hosts:
+    - bank.example.com
+    secretName: bank-secret
+  rules:
+  - host: bank.example.com
+    http:
+      paths:
+      - path: /deposit
+        pathType: Prefix
+        backend:
+          service:
+            name: deposit-svc
+            port:
+              number: 80
+      - path: /credit
+        pathType: Prefix
+        backend:
+          service:
+            name: credit-svc
+            port:
+              number: 80

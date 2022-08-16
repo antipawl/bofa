@@ -1,0 +1,8 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx-org
+  namespace: app2
+spec:
+  type: ExternalName
+  externalName: nginx.org

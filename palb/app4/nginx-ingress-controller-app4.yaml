@@ -1,0 +1,62 @@
+apiVersion: charts.nginx.org/v1alpha1
+kind: NginxIngress
+metadata:
+  name: app4
+  namespace: app4
+spec:
+  controller:
+    config:
+      entries:
+        resolver-addresses: "8.8.8.8"
+    defaultTLS:
+      secret: app4/default-server-secret
+    enableCustomResources: true
+    enableOIDC: false
+    enablePreviewPolicies: true
+    enableSnippets: true
+    globalConfiguration:
+      create: true
+      spec:
+        listeners:
+        - name: google-dns-tcp-lsn
+          port: 8090
+          protocol: TCP
+        - name: google-dns-udp-lsn
+          port: 8091
+          protocol: UDP
+    image:
+      repository: image-registry.openshift-image-registry.svc:5000/nginx-ingress/nginx-ingress-plus
+      tag: 2.3.0-ubi
+      pullPolicy: Always
+    ingressClass: nginx-ingress-app4
+    kind: deployment
+    logLevel: 3
+    nginxDebug: true
+    nginxplus: true
+    replicaCount: 1
+    service:
+      annotations: {}
+      create: false
+      customPorts: []
+      externalIPs: []
+      externalTrafficPolicy: Local
+      extraLabels: {}
+      httpPort:
+        enable: true
+        nodePort: ""
+        port: 80
+        targetPort: 80
+      httpsPort:
+        enable: true
+        nodePort: ""
+        port: 443
+        targetPort: 443
+      loadBalancerIP: ""
+      loadBalancerSourceRanges: []
+      type: NodePort
+    serviceAccount:
+      imagePullSecretName: ""
+    setAsDefaultIngress: false
+    watchNamespace: app4
+  rbac:
+    create: true

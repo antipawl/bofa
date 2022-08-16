@@ -1,0 +1,15 @@
+apiVersion: k8s.nginx.org/v1alpha1
+kind: TransportServer
+metadata:
+  name: google-dns-tcp
+  namespace: app4
+spec:
+  listener:
+    name: google-dns-tcp-lsn
+    protocol: TCP
+  upstreams:
+  - name: google-dns-tcp
+    service: google-dns-tcp
+    port: 5353
+  action:
+    pass: google-dns-tcp

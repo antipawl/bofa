@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: anyuid-netbind-acc
+  namespace: app3
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: anyuid-netbind-role
+  namespace: app3
+rules:
+- apiGroups:
+  - security.openshift.io 
+  resourceNames:
+  - anyuid-netbind
+  resources:
+  - securitycontextconstraints 
+  verbs: 
+  - use
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: anyuid-netbind-rolebinding
+  namespace: app3
+subjects:
+- kind: ServiceAccount
+  name: anyuid-netbind-acc
+  namespace: app3
+roleRef:
+  kind: Role
+  name: anyuid-netbind-role
+  namespace: app3
+  apiGroup: rbac.authorization.k8s.io

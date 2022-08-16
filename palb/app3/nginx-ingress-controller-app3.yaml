@@ -1,0 +1,59 @@
+apiVersion: charts.nginx.org/v1alpha1
+kind: NginxIngress
+metadata:
+  name: app3
+  namespace: app3
+spec:
+  controller:
+    defaultTLS:
+      secret: app3/default-server-secret
+    enableCustomResources: true
+    enableOIDC: false
+    enablePreviewPolicies: true
+    enableSnippets: true
+    globalConfiguration:
+      create: true
+      spec:
+        listeners:
+          - name: dns-udp
+            port: 5353
+            protocol: UDP
+          - name: dns-tcp
+            port: 5353
+            protocol: TCP
+    image:
+      repository: image-registry.openshift-image-registry.svc:5000/nginx-ingress/nginx-ingress-plus
+      tag: 2.3.0-ubi
+      pullPolicy: Always
+    ingressClass: nginx-ingress-app3
+    kind: deployment
+    logLevel: 3
+    nginxDebug: true
+    nginxplus: true
+    replicaCount: 1
+    service:
+      annotations: {}
+      create: false
+      customPorts: []
+      externalIPs: []
+      externalTrafficPolicy: Local
+      extraLabels: {}
+      httpPort:
+        enable: true
+        nodePort: ""
+        port: 80
+        targetPort: 80
+      httpsPort:
+        enable: true
+        nodePort: ""
+        port: 443
+        targetPort: 443
+      loadBalancerIP: ""
+      loadBalancerSourceRanges: []
+      type: NodePort
+    serviceAccount:
+      imagePullSecretName: ""
+    setAsDefaultIngress: false
+    watchNamespace: app3
+  rbac:
+    create: true

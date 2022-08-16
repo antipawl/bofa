@@ -1,0 +1,55 @@
+apiVersion: charts.nginx.org/v1alpha1
+kind: NginxIngress
+metadata:
+  name: app2
+  namespace: app2
+spec:
+  controller:
+    config:
+      entries:
+        resolver-addresses: "8.8.8.8"
+    defaultTLS:
+      secret: app2/default-server-secret
+    enableCustomResources: true
+    enableOIDC: false
+    enablePreviewPolicies: true
+    enableSnippets: true
+    globalConfiguration:
+      create: false
+      spec: {}
+    image:
+      repository: image-registry.openshift-image-registry.svc:5000/nginx-ingress/nginx-ingress-plus
+      tag: 2.3.0-ubi
+      pullPolicy: Always
+    ingressClass: nginx-ingress-app2
+    kind: deployment
+    logLevel: 3
+    nginxDebug: true
+    nginxplus: true
+    replicaCount: 1
+    service:
+      annotations: {}
+      create: false
+      customPorts: []
+      externalIPs: []
+      externalTrafficPolicy: Local
+      extraLabels: {}
+      httpPort:
+        enable: true
+        nodePort: ""
+        port: 80
+        targetPort: 80
+      httpsPort:
+        enable: true
+        nodePort: ""
+        port: 443
+        targetPort: 443
+      loadBalancerIP: ""
+      loadBalancerSourceRanges: []
+      type: NodePort
+    serviceAccount:
+      imagePullSecretName: ""
+    setAsDefaultIngress: false
+    watchNamespace: app2
+  rbac:
+    create: true

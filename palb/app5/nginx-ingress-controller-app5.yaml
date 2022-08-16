@@ -1,0 +1,70 @@
+apiVersion: charts.nginx.org/v1alpha1
+kind: NginxIngress
+metadata:
+  name: app5
+  namespace: app5
+spec:
+  controller:
+    config:
+      entries:
+        resolver-addresses: "8.8.8.8"
+        stream-snippets: |
+                resolver 1.0.0.1 valid=5s;
+                upstream google-dns {
+                        zone google-dns 64k;
+                        server dns.google.com:53 resolve;
+                }
+                server{
+                    listen 8091;
+                    listen [::]:8091;
+                    proxy_pass google-dns;
+                }
+                server{
+                    listen 8092 udp;
+                    listen [::]:8092 udp;
+                    proxy_pass google-dns;
+                }
+    defaultTLS:
+      secret: app5/default-server-secret
+    enableCustomResources: true
+    enableOIDC: false
+    enablePreviewPolicies: true
+    enableSnippets: true
+    globalConfiguration:
+      create: true
+    image:
+      repository: image-registry.openshift-image-registry.svc:5000/nginx-ingress/nginx-ingress-plus
+      tag: 2.3.0-ubi
+      pullPolicy: Always
+    ingressClass: nginx-ingress-app5
+    kind: deployment
+    logLevel: 3
+    nginxDebug: true
+    nginxplus: true
+    replicaCount: 1
+    service:
+      annotations: {}
+      create: false
+      customPorts: []
+      externalIPs: []
+      externalTrafficPolicy: Local
+      extraLabels: {}
+      httpPort:
+        enable: true
+        nodePort: ""
+        port: 80
+        targetPort: 80
+      httpsPort:
+        enable: true
+        nodePort: ""
+        port: 443
+        targetPort: 443
+      loadBalancerIP: ""
+      loadBalancerSourceRanges: []
+      type: NodePort
+    serviceAccount:
+      imagePullSecretName: ""
+    setAsDefaultIngress: false
+    watchNamespace: app5
+  rbac:
+    create: true

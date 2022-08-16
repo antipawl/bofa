@@ -1,0 +1,15 @@
+apiVersion: k8s.nginx.org/v1alpha1
+kind: TransportServer
+metadata:
+  name: dns-tcp
+  namespace: app3
+spec:
+  listener:
+    name: dns-tcp
+    protocol: TCP
+  upstreams:
+  - name: dns-app
+    service: coredns
+    port: 53
+  action:
+    pass: dns-app

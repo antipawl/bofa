@@ -1,0 +1,15 @@
+apiVersion: k8s.nginx.org/v1alpha1
+kind: TransportServer
+metadata:
+  name: google-dns-udp
+  namespace: app4
+spec:
+  listener:
+    name: google-dns-udp-lsn
+    protocol: UDP
+  upstreams:
+  - name: google-dns-udp
+    service: google-dns-udp
+    port: 5353
+  action:
+    pass: google-dns-udp

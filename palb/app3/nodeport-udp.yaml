@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-ingress-udp-app3
+  namespace: app3
+spec:
+  type: NodePort 
+  ports:
+  - port: 5353
+    nodePort: 30256 
+    targetPort: 5353
+    protocol: UDP
+    name: dns-udp
+  selector:
+    app: app3-nginx-ingress

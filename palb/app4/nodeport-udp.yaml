@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-ingress-udp-app4
+  namespace: app4
+spec:
+  type: NodePort 
+  ports:
+  - port: 8091
+    targetPort: 8091
+    nodePort: 30356 
+    protocol: UDP
+    name: google-dns-udp
+  selector:
+    app: app4-nginx-ingress
