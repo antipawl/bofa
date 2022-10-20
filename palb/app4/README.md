@@ -1,10 +1,8 @@
-# Bank of America
+# Per-app load-balancing PoC
 
-## Per-app load-balancing PoC
+# NGINX Plus Ingress Controller deployment - `app4`
 
-## NGINX Plus Ingress Controller deployment - `app4`
-
-### Namespace creation
+## Namespace creation
 
 Let's create the namespace `app4`, where we deploy NGINX Plus Ingress Controller:
 
@@ -23,13 +21,13 @@ Warning: Group 'system:serviceaccounts:app4' not found
 clusterrole.rbac.authorization.k8s.io/system:image-puller added: "system:serviceaccounts:app4"
 ```
 
-### Deploy Default Secret
+## Deploy Default Secret
 
 ```
 oc apply -f default-server-secret.yaml;
 ```
 
-### Deploy NGINX Plus Ingress Controller
+## Deploy NGINX Plus Ingress Controller
 
 Now everything is ready to deploy NGINX Plus Ingress Controller into namespace `app4`
 
@@ -57,51 +55,51 @@ oc apply -f external-endpoint-tcp.yaml
 oc apply -f external-endpoint-udp.yaml
 ```
 
-### Verify Endpoints Deployment
+## Verify Endpoints Deployment
 
 ```
 oc get endpoints -n app4
 ```
 
-### Deploy Services For Endpoints
+## Deploy Services For Endpoints
 ```
 oc apply -f external-service-tcp.yaml
 oc apply -f external-service-udp.yaml
 ```
 
-### Verify 'Services For Endpoint's' Deployment
+## Verify 'Services For Endpoint's' Deployment
 
 ```
 oc get svc nginx-org -n app4
 ```
 
-### Deploy Transport Servers
+## Deploy Transport Servers
 
 ```
 oc apply -f ts-nginx-org-tcp.yaml
 oc apply -f ts-nginx-org-udp.yaml
 ```
 
-### Verify Transport Server Deployment
+## Verify Transport Server Deployment
 
 ```
 oc get ts -n app4
 ```
 
-### Deploy Nodeport
+## Deploy Nodeport
 
 ```
 oc apply -f nodeport-tcp.yaml
 oc apply -f nodeport-udp.yaml
 ```
 
-### Verify Nodeports Deployment
+## Verify Nodeports Deployment
 
 ```
 oc get svc -n app4 | grep NodePort
 ```
 
-### Test With DIG
+## Test With DIG
 
 Test dns query with DIG via Ingress Controller L4 load balancing, for both dns over TCP and UDP.
 ```
