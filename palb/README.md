@@ -1,17 +1,15 @@
-# Bank of America
+# Per-app load-balancing PoC
 
-## Per-app load-balancing PoC
-
-The repository contains the Bank of America use cases.
+The repository contains use cases.
 
 
-## NGINX Ingress Operator deployment
+# NGINX Ingress Operator deployment
 
-### Pre-requisites
+## Pre-requisites
 
 OpenShift 4.10 cluster installed, here's the documentation, https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10
 
-### Approve CSRs after (re)starting the cluster
+## Approve CSRs after (re)starting the cluster
 
 Once the cluster is up, usually it takes 15 minutes, please check pending CSRs:
 
@@ -35,14 +33,14 @@ $ oc patch configs.imageregistry.operator.openshift.io cluster --type merge --pa
 config.imageregistry.operator.openshift.io/cluster patched
 ```
 
-#### Configure storage for the image registry in non-production clusters
+### Configure storage for the image registry in non-production clusters
 
 ```
 $ oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"storage":{"emptyDir":{}}}}'
 config.imageregistry.operator.openshift.io/cluster patched
 ```
 
-#### Deploy Manifests
+### Deploy Manifests
 
 The following manifests need to be deployed before the NGINX Plus Ingress Operator.
 
@@ -51,7 +49,7 @@ $ oc apply -f k8s/scc.yaml
 ```
 
 
-### Deployment
+## Deployment
 
 Use OpenShift UI to install the NGINX Ingress Operator.
 Login to the OpenShift Administrator account, usually `kube-admin`, navigate to `OperatorHub`,
@@ -81,7 +79,7 @@ $ oc create secret docker-registry regcred --docker-server="private-registry.ngi
 secret/regcred created
 ```
 
-### Import `nginx-ingress-plus` image to the OpenShift registry
+## Import `nginx-ingress-plus` image to the OpenShift registry
 
 Pre-compiled `nginx-ingress-plus` image is available to download from the
 [NGINX Private Registry](https://private-registry.nginx.com).
