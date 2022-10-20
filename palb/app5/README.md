@@ -1,10 +1,8 @@
-# Bank of America
+# Per-app load-balancing PoC
 
-## Per-app load-balancing PoC
+# NGINX Plus Ingress Controller deployment - `app5`
 
-## NGINX Plus Ingress Controller deployment - `app5`
-
-### Namespace creation
+## Namespace creation
 
 Let's create the namespace `app5`, where we deploy NGINX Plus Ingress Controller:
 
@@ -23,13 +21,13 @@ Warning: Group 'system:serviceaccounts:app5' not found
 clusterrole.rbac.authorization.k8s.io/system:image-puller added: "system:serviceaccounts:app5"
 ```
 
-### Deploy Default Secret
+## Deploy Default Secret
 
 ```
 oc apply -f default-server-secret.yaml;
 ```
 
-### Deploy NGINX Plus Ingress Controller
+## Deploy NGINX Plus Ingress Controller
 
 Now everything is ready to deploy NGINX Plus Ingress Controller into namespace `app5`
 
@@ -50,7 +48,7 @@ $ oc exec nginx-ingress-controller-app2-597bfcf891-abgxy -n app3 -- nginx -v
 nginx version: nginx/1.21.5 (nginx-plus-r26)
 ```
 
-### Deploy Nodeports
+## Deploy Nodeports
 
 Deploy Nodeports for both TCP and UDP.
 
@@ -59,12 +57,12 @@ oc apply -f nodeport-tcp.yaml;
 oc apply -f nodeport-udp.yaml;
 ```
 
-### Verify Nodeport Deployment 
+## Verify Nodeport Deployment 
 ```
 oc get svc -n app5 | grep NodePort
 ```
 
-### Test With DIG
+## Test With DIG
 
 Test dns query with DIG via Ingress Controller L4 load balancing, for both dns over TCP and UDP.
 ```
