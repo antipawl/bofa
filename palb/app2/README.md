@@ -1,10 +1,8 @@
-# Bank of America
+# Per-app load-balancing PoC
 
-## Per-app load-balancing PoC
+# NGINX Plus Ingress Controller deployment - `app2`
 
-## NGINX Plus Ingress Controller deployment - `app2`
-
-### Namespace creation
+## Namespace creation
 
 Let's create the namespace `app2`, where we deploy NGINX Plus Ingress Controller:
 
@@ -14,7 +12,7 @@ $ oc create -f ns-app2.yaml
 namespace/app2 created
 ```
 
-### Allow to get image
+## Allow to get image
 
 The policy list needs to be updated to allow to get the `nginx-ingress-plus` image from the `nginx-ingress` project:
 
@@ -24,13 +22,13 @@ Warning: Group 'system:serviceaccounts:app2' not found
 clusterrole.rbac.authorization.k8s.io/system:image-puller added: "system:serviceaccounts:app2"
 ```
 
-### Deploy default server certificate and key
+## Deploy default server certificate and key
 
 ```
 $ oc deploy -f default-server-secret.yaml
 ```
 
-### Deploy NGINX Plus Ingress Controller
+## Deploy NGINX Plus Ingress Controller
 
 Now everything is ready to deploy NGINX Plus Ingress Controller into namespace `app2`
 
